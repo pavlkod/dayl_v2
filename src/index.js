@@ -1,23 +1,23 @@
 const http = require("http");
-const fs = require("fs");
+const fs = require("fs/promises");
 const path = require("path");
 
 const port = process.env.PORT || 3000;
 
 const getStaticContent = (res, pathFile, contentType = "text/html", status = 200) => {
-  const file = fs.readFile(path.resolve(__dirname, pathFile), (err, data) => {
-    console.log(`${__dirname}${path}`);
-    if (err) {
+  fs.readFile(path.resolve(__dirname, pathFile))
+    .then(data => {
+      res.writeHead(status, {
+        "Content-type": contentType,
+      });
+      res.end(data);
+    })
+    .catch(err => {
       res.writeHead(404, {
         "Content-type": "text/plain",
       });
-      return res.end("Error");
-    }
-    res.writeHead(status, {
-      "Content-type": contentType,
+      return res.end("err");
     });
-    res.end(data);
-  });
 };
 
 const server = http.createServer((req, res) => {
