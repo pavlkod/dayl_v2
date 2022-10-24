@@ -1,37 +1,34 @@
-const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
+const express = require("express");
+
+const app = express();
 
 const port = process.env.PORT || 3000;
 
-const getStaticContent = (res, pathFile, contentType = "text/html", status = 200) => {
+const getStaticContent = (res, pathFile, status = 200, contentType = "text/html") => {
   fs.readFile(path.resolve(__dirname, pathFile))
     .then(data => {
-      res.writeHead(status, {
-        "Content-type": contentType,
-      });
+      res.status(status);
+      res.type(contentType);
       res.end(data);
     })
     .catch(err => {
-      res.writeHead(404, {
-        "Content-type": "text/plain",
-      });
-      return res.end("err");
+      res.status(404);
+      res.type("text/plain");
+      res.end("err");
     });
 };
 
-const server = http.createServer((req, res) => {
-  switch (req.url) {
-    case "/about":
-      getStaticContent(res, "../public/about.html");
-      break;
-    case "/":
-      getStaticContent(res, "../public/home.html");
-      break;
-    default:
-      getStaticContent(res, "../public/404.html", "text/html", 404);
-      break;
-  }
+app.get("/", (req, res) => {
+  getStaticContent(res, "../public/home.html");
+});
+app.get("/about/", (req, res) => {
+  console.log(req.params);
+  getStaticContent(res, "../public/about.html");
+});
+app.use((req, res) => {
+  getStaticContent(res, "../public/404.html", 404);
 });
 
-server.listen(port, () => console.log(`server started on ${port}`));
+app.listen(port, () => console.log(`server started on ${port}`));
