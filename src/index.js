@@ -1,6 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 const express = require("express");
+const { engine } = require("express-handlebars");
 
 const app = express();
 
@@ -20,15 +21,20 @@ const getStaticContent = (res, pathFile, status = 200, contentType = "text/html"
     });
 };
 
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+
 app.get("/", (req, res) => {
-  getStaticContent(res, "../public/home.html");
+  // getStaticContent(res, "../public/home.html");
+  res.render("home");
 });
 app.get("/about/", (req, res) => {
-  console.log(req.params);
-  getStaticContent(res, "../public/about.html");
+  // console.log(req.params);
+  // getStaticContent(res, "../public/about.html");
+  res.render("about");
 });
 app.use((req, res) => {
-  getStaticContent(res, "../public/404.html", 404);
+  res.status(404).render("404");
 });
 
 app.listen(port, () => console.log(`server started on ${port}`));
