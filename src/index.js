@@ -21,6 +21,8 @@ const getStaticContent = (res, pathFile, status = 200, contentType = "text/html"
     });
 };
 
+app.use(express.static(path.resolve(__dirname, "../public")));
+
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 
