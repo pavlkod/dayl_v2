@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/pavlkod/dayl_v2#readme",
   "devDependencies": {
+    "jest": "^29.2.2",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
