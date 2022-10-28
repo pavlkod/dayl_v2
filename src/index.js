@@ -3,6 +3,8 @@ const path = require("path");
 const express = require("express");
 const { engine } = require("express-handlebars");
 
+const handlers = require("./handlers");
+
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -12,9 +14,7 @@ app.use(express.static(path.resolve(__dirname, "../public")));
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.get("/", handlers.home);
 app.get("/about/", (req, res) => {
   res.render("about");
 });
