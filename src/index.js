@@ -11,7 +11,18 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(path.resolve(__dirname, "../public")));
 
-app.engine("handlebars", engine());
+app.engine(
+  "handlebars",
+  engine({
+    helpers: {
+      section: function (name, options) {
+        if (!this._sections) this._sections = {};
+        this._sections[name] = options.fn(this);
+        return null;
+      },
+    },
+  })
+);
 app.set("view engine", "handlebars");
 
 app.get("/", handlers.home);
