@@ -4,12 +4,14 @@ const express = require("express");
 const { engine } = require("express-handlebars");
 
 const handlers = require("./handlers");
+const weatherMiddleware = require("./lib/middleware/getWeather");
 
 const app = express();
 
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.resolve(__dirname, "../public")));
+app.use(weatherMiddleware);
 
 app.engine(
   "handlebars",
