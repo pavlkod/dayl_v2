@@ -29,6 +29,11 @@ app.set("view engine", "handlebars");
 
 app.get("/", handlers.home);
 app.get("/about/", handlers.about);
+
+app.get("/newsletter-signup/", handlers.newsletterSignup);
+app.post("/newsletter-signup/process", handlers.newsletterProcess);
+app.get("/newsletter-signup/thank-you", handlers.newsletterSuccess);
+
 app.use((req, res) => {
   res.status(404).render("404");
 });
