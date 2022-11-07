@@ -13,6 +13,7 @@ const port = process.env.PORT || 3000;
 app.use(express.static(path.resolve(__dirname, "../public")));
 app.use(weatherMiddleware);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.engine(
   "handlebars",
@@ -34,6 +35,9 @@ app.get("/about/", handlers.about);
 app.get("/newsletter-signup/", handlers.newsletterSignup);
 app.post("/newsletter-signup/process", handlers.newsletterProcess);
 app.get("/newsletter-signup/thank-you", handlers.newsletterSuccess);
+
+app.get("/newsletter", handlers.newsletterWithAjax);
+app.post("/api/newsletter", handlers.api.newsletterSuccess);
 
 app.use((req, res) => {
   res.status(404).render("404");
