@@ -16,3 +16,15 @@ exports.api = {
     res.json({ result: `${req.body.name} was subscribed on ${req.body.email}` });
   },
 };
+
+exports.vacationPhotoContest = (req, res) => {
+  const date = new Date();
+  res.render("contest/vacation-photo", { year: date.getFullYear(), month: date.getMonth() });
+};
+exports.vacationPhotoContestProcessError = (req, res) => res.render("contest/vacation-photo-error");
+exports.vacationPhotoContestProcessThankYou = (req, res) => res.render("contest/vacation-photo-thank-you");
+exports.vacationPhotoContestProcess = (req, res, fields, files) => {
+  console.log("field data: ", fields);
+  console.log("files: ", files);
+  res.redirect(303, "/contest/vacation-photo-thank-you");
+};
