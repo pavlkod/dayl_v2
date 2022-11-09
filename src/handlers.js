@@ -28,3 +28,6 @@ exports.vacationPhotoContestProcess = (req, res, fields, files) => {
   console.log("files: ", files);
   res.redirect(303, "/contest/vacation-photo-thank-you");
 };
+exports.vacationPhotoContestAjax = (req, res) => {
+  res.render("contest/vacation-photo-ajax");
+};
