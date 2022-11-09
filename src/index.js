@@ -53,6 +53,8 @@ app.post("/contest/vacation-photo/:year/:month", (req, res) => {
 });
 app.get("/contest/vacation-photo-thank-you", handlers.vacationPhotoContestProcessThankYou);
 
+app.get("/contest/vacation-photo-ajax", handlers.vacationPhotoContestAjax);
+
 app.use((req, res) => {
   res.status(404).render("404");
 });
