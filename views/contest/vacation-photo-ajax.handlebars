@@ -33,6 +33,7 @@
 {{#section 'script'}}
 <script>
     document.getElementById('vacationPhotoContestForm').addEventListener('submit', e => {
+        e.preventDefault()
         const form = e.target
         const body = new FormData(form)
         const container = document.getElementById('vacationPhotoContestFormContainer')
