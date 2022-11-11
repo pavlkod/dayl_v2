@@ -15,6 +15,14 @@ exports.api = {
     console.log(req.body);
     res.json({ result: `${req.body.name} was subscribed on ${req.body.email}` });
   },
+  vacationPhotoContestError: (req, res, message) => {
+    res.send({ result: "error", error: message });
+  },
+  vacationPhotoContest: (req, res, fields, files) => {
+    console.log("field data: ", fields);
+    console.log("files: ", files);
+    res.send({ result: "success" });
+  },
 };
 
 exports.vacationPhotoContest = (req, res) => {
@@ -28,6 +36,8 @@ exports.vacationPhotoContestProcess = (req, res, fields, files) => {
   console.log("files: ", files);
   res.redirect(303, "/contest/vacation-photo-thank-you");
 };
+
 exports.vacationPhotoContestAjax = (req, res) => {
-  res.render("contest/vacation-photo-ajax");
+  const date = new Date();
+  res.render("contest/vacation-photo-ajax", { year: date.getFullYear(), month: date.getMonth() });
 };
