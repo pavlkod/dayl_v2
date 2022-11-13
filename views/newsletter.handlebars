@@ -22,3 +22,34 @@
         </div>
     </form>
 </div>
+
+{{#section 'script'}}
+<script>
+    document.getElementById('newsletterSignupForm').addEventListener('submit', e => {
+        e.preventDefault()
+        const form = e.target
+        const container = document.getElementById('newsletterSignupFormContainer')
+
+        const body = JSON.stringify({
+            _csrf: form.elements._csrf.value,
+            name: form.elements.name.value,
+            email: form.elements.email.value
+        })
+        const headers = {'Content-type': 'application/json'}
+        fetch('/api/newsletter', {method: 'POST', body, headers})
+        .then(resp => {
+            if (resp.status < 200 || resp.status > 300) {
+                throw new Error('error')
+            }
+            return resp.json()
+        })
+        .then(data => {
+            console.log(data)
+            container.innerHTML = `OK ${data.result}`
+        })
+        .catch(err => {
+            container.innerHTML = 'Something went wrong. Try again'
+        })
+    })
+</script>
+{{/section}}
