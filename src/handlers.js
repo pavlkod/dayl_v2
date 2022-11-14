@@ -3,8 +3,10 @@ exports.about = (req, res) => res.render("about", { test: "test" });
 exports.notFound = (req, res) => res.status(404).render("404");
 
 exports.newsletterSignup = (req, res) => {
-  // res.cookie("test", "value2");
+  res.cookie("test2", "value3", { signed: true });
   console.log(req.cookies);
+  console.log(req.signedCookies.test2);
+  // console.log(req.headers);
   res.render("newsletter-signup");
 };
 exports.newsletterProcess = (req, res) => {
