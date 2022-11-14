@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 
 const handlers = require("./handlers");
 const weatherMiddleware = require("./lib/middleware/getWeather");
-const credentials = require("./credentials");
+const { credentionals } = require("./credentials");
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(express.static(path.resolve(__dirname, "../public")));
 app.use(weatherMiddleware);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser(credentials.cookieSecret));
+app.use(cookieParser(credentionals.cookieSecret));
 
 app.engine(
   "handlebars",
