@@ -11,6 +11,10 @@ exports.newsletterSignup = (req, res) => {
 };
 exports.newsletterProcess = (req, res) => {
   console.log(req.body);
+  req.session.flash = {
+    message: 123,
+    type: "info",
+  };
   res.redirect(303, "/newsletter-signup/thank-you");
 };
 exports.newsletterSuccess = (req, res) => res.render("newsletter-signup-thank-you");
