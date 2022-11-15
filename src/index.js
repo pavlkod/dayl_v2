@@ -9,6 +9,7 @@ const expressSession = require("express-session");
 const handlers = require("./handlers");
 const weatherMiddleware = require("./lib/middleware/getWeather");
 const { credentionals } = require("./credentials");
+const flashMiddleware = require("./lib/middleware/flash");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(credentionals.cookieSecret));
 app.use(expressSession({ secret: credentionals.cookieSecret, resave: true, saveUninitialized: true }));
+app.use(flashMiddleware);
 
 app.engine(
   "handlebars",
