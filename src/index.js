@@ -4,6 +4,7 @@ const multiparty = require("multiparty");
 const express = require("express");
 const { engine } = require("express-handlebars");
 const cookieParser = require("cookie-parser");
+const expressSession = require("express-session");
 
 const handlers = require("./handlers");
 const weatherMiddleware = require("./lib/middleware/getWeather");
@@ -18,6 +19,7 @@ app.use(weatherMiddleware);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(credentionals.cookieSecret));
+app.use(expressSession({ secret: credentionals.cookieSecret, resave: true, saveUninitialized: true }));
 
 app.engine(
   "handlebars",
