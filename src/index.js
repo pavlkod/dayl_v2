@@ -73,4 +73,4 @@ app.use((req, res) => {
   res.status(404).render("404");
 });
 
-app.listen(port, () => console.log(`server started on ${port}`));
+app.listen(port, () => console.log(`server started on ${port} env is ${app.get("env")}`));
