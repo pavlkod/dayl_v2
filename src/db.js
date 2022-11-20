@@ -24,4 +24,10 @@ module.exports = {
     if (options.available !== undefined) return vacations.filter(({ available }) => available === options.available);
     return vacations;
   },
+  addVacationlnSeasonListener: async (email, sku) => {
+    // Мы только притворимся, что делаем это...
+    // Поскольку это асинхронная функция, автоматически
+    // будет возвращен новый промис,
+    // исполняющийся со значением undefined.
+  },
 };
