@@ -2,6 +2,25 @@ exports.home = (req, res) => res.render("home");
 exports.about = (req, res) => res.render("about", { test: "test" });
 exports.notFound = (req, res) => res.status(404).render("404");
 
+exports.dbMiddleware = credentionals => {
+  const mongoose = require('mongoose')
+  return (req, res, next) => {
+    const {
+      mongo: { connectionstring },
+    } = credentionals;
+    if (connectionstring) {
+      console.log(connectionstring);
+      mongoose.connect(connectionstring);
+      const db = mongoose.connection;
+      db.on("error", err => {
+        console.error("Ошибка MongoDB: " + err.message);
+      });
+      db.once("open", () => console.log("Установлено соединение c MongoDB"));
+    }
+    next();
+  };
+};
+
 exports.newsletterSignup = (req, res) => {
   res.cookie("test2", "value3", { signed: true });
   console.log(req.cookies);
