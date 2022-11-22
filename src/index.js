@@ -23,6 +23,8 @@ app.use(cookieParser(credentionals.cookieSecret));
 app.use(expressSession({ secret: credentionals.cookieSecret, resave: true, saveUninitialized: true }));
 app.use(flashMiddleware);
 
+app.use(handlers.dbMiddleware(credentionals));
+
 app.engine(
   "handlebars",
   engine({
