@@ -5,6 +5,7 @@ const express = require("express");
 const { engine } = require("express-handlebars");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
+const mongoose = require("mongoose");
 
 const handlers = require("./handlers");
 const weatherMiddleware = require("./lib/middleware/getWeather");
@@ -23,7 +24,7 @@ app.use(cookieParser(credentionals.cookieSecret));
 app.use(expressSession({ secret: credentionals.cookieSecret, resave: true, saveUninitialized: true }));
 app.use(flashMiddleware);
 
-app.use(handlers.dbMiddleware(credentionals));
+// app.use(handlers.dbMiddleware(credentionals));
 
 app.engine(
   "handlebars",
@@ -74,5 +75,10 @@ app.post("/api/vacation-photo-contest/:year/:month", (req, res) => {
 app.use((req, res) => {
   res.status(404).render("404");
 });
-
-app.listen(port, () => console.log(`server started on ${port} env is ${app.get("env")}`));
+(async () => {
+  await mongoose.connect(credentionals.mongo.connectionstring).then(
+    () => console.log("Установлено соединение c MongoDB"),
+    err => "Ошибка MongoDB: " + err.message
+  );
+  app.listen(port, () => console.log(`server started on ${port} env is ${app.get("env")}`));
+})();
