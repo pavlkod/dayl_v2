@@ -3,7 +3,7 @@ exports.about = (req, res) => res.render("about", { test: "test" });
 exports.notFound = (req, res) => res.status(404).render("404");
 
 exports.dbMiddleware = credentionals => {
-  const mongoose = require('mongoose')
+  const mongoose = require("mongoose");
   return (req, res, next) => {
     const {
       mongo: { connectionstring },
@@ -21,7 +21,24 @@ exports.dbMiddleware = credentionals => {
   };
 };
 
-exports.newsletterSignup = (req, res) => {
+exports.newsletterSignup = async (req, res) => {
+  const Vacation = require("./models/vacation");
+  await new Vacation({
+    name: "Rock Climbing in Bend",
+    slug: "rock-climbing-in-bend",
+    category: "Adventure",
+    sku: "B99",
+    description: "Experience the thrill of climbing in the high desert.",
+    price: 289.95,
+    tags: ["weekend getaway", "bend", "high desert", "rock climbing"],
+    inSeason: true,
+    requiresWaiver: true,
+    maximumGuests: 4,
+    available: false,
+    packagesSold: 0,
+    notes: "The tour guide is currently recovering from a skiing accident.",
+  }).save();
+
   res.cookie("test2", "value3", { signed: true });
   console.log(req.cookies);
   console.log(req.signedCookies.test2);
