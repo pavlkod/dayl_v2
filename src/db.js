@@ -1,6 +1,8 @@
+const Vacation = require("./models/vacation");
+
 module.exports = {
   getVacations: async (options = {}) => {
-    const vacations = [
+    /*const vacations = [
       {
         name: "Однодневный тур в Худ-Ривер",
         slug: "hood- river - day - trip",
@@ -20,7 +22,8 @@ module.exports = {
           packagesSold: 0,
         },
       },
-    ];
+    ];*/
+    const vacations = Vacation.find(options);
     if (options.available !== undefined) return vacations.filter(({ available }) => available === options.available);
     return vacations;
   },
