@@ -74,6 +74,8 @@ app.post("/api/vacation-photo-contest/:year/:month", (req, res) => {
 
 // vacations
 app.get("/vacations", handlers.listVacations);
+app.get("/notify-me-when-in-season", handlers.notifyWhenInSeasonForm);
+app.post("/notify-me-when-in-season", handlers.notifyWhenInSeasonProcess);
 
 app.use((req, res) => {
   res.status(404).render("404");
