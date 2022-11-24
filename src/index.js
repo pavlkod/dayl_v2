@@ -72,6 +72,9 @@ app.post("/api/vacation-photo-contest/:year/:month", (req, res) => {
   });
 });
 
+// vacations
+app.get("/vacations", handlers.listVacations);
+
 app.use((req, res) => {
   res.status(404).render("404");
 });
