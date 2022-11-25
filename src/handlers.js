@@ -1,3 +1,5 @@
+const db = require("./db");
+
 exports.home = (req, res) => res.render("home");
 exports.about = (req, res) => res.render("about", { test: "test" });
 exports.notFound = (req, res) => res.status(404).render("404");
@@ -86,4 +88,18 @@ exports.vacationPhotoContestProcess = (req, res, fields, files) => {
 exports.vacationPhotoContestAjax = (req, res) => {
   const date = new Date();
   res.render("contest/vacation-photo-ajax", { year: date.getFullYear(), month: date.getMonth() });
+};
+
+exports.listVacations = async (req, res) => {
+  const vacations = await db.getVacations({ available: true });
+
+  res.render("vacation", {
+    vacations: vacations.map(vacation => ({
+      name: vacation.name,
+      description: vacation.description,
+      sku: vacation.sku,
+      inSeason: vacation.inSeason,
+      price: `$ ${vacation.price.toFixed(2)}`,
+    })),
+  });
 };
