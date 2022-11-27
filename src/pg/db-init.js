@@ -1,7 +1,9 @@
-const credentials = require("./credentials");
+const { credentionals } = require("../credentials");
 
 const { Client } = require("pg");
-const { connectionString } = credentials.postgres[process.env.NODE_ENV || "development"];
+const {
+  postgres: { connectionString },
+} = credentionals;
 const client = new Client({ connectionString });
 
 const createScript = `
