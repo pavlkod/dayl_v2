@@ -11,4 +11,8 @@ module.exports = {
   postgres: {
     connectionString: "postgres://bmgxknje:ztbnBC25uCtk5NhbaALVfIFIA0EcIzSR@lucky.db.elephantsql.com/bmgxknje",
   },
+  redis: {
+    connectionString:
+      "redis://default:6G9YcArOqspMvsp6tMByg7FD9iKJg7H4@redis-13384.c92.us-east-1-3.ec2.cloud.redislabs.com:13384",
+  },
 };
