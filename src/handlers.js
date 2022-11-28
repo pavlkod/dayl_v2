@@ -103,11 +103,30 @@ exports.listVacations = async (req, res) => {
     })),
   });
 };
+function convertFromUSD(value, currency) {
+  switch (currency) {
+    case "USD":
+      return value * 1;
+    case "GBP":
+      return value * 0.79;
+    case "BTC":
+      return value * 0.000078;
+    default:
+      return NaN;
+  }
+}
 
 exports.notifyWhenInSeasonForm = (req, res) => res.render("notify-me-when-in-season", { sku: req.query.sku });
 
 exports.notifyWhenInSeasonProcess = async (req, res) => {
   const { email, sku } = req.body;
   await db.addVacationInSeasonListener(email, sku);
+  return res.redirect(303, "/vacations");
+};
+
+// note that this redirects to the /vacations page, but may
+// want to use on // other pages!  should fix....
+exports.setCurrency = (req, res) => {
+  req.session.currency = req.params.currency;
   return res.redirect(303, "/vacations");
 };
