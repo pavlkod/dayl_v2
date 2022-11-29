@@ -6,6 +6,7 @@ const { engine } = require("express-handlebars");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
 const mongoose = require("mongoose");
+const RedisStore = require("connect-redis")(expressSession);
 
 const handlers = require("./handlers");
 const weatherMiddleware = require("./lib/middleware/getWeather");
@@ -21,7 +22,16 @@ app.use(weatherMiddleware);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(credentionals.cookieSecret));
-app.use(expressSession({ secret: credentionals.cookieSecret, resave: true, saveUninitialized: true }));
+app.use(
+  expressSession({
+    secret: credentionals.cookieSecret,
+    resave: false,
+    saveUninitialized: false,
+    store: new RedisStore({
+      url: credentionals.redis.connectionString,
+    }),
+  })
+);
 app.use(flashMiddleware);
 
 // app.use(handlers.dbMiddleware(credentionals));
