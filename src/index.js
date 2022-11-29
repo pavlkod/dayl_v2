@@ -77,6 +77,9 @@ app.get("/vacations", handlers.listVacations);
 app.get("/notify-me-when-in-season", handlers.notifyWhenInSeasonForm);
 app.post("/notify-me-when-in-season", handlers.notifyWhenInSeasonProcess);
 
+// utility routes
+app.get("/set-currency/:currency", handlers.setCurrency);
+
 app.use((req, res) => {
   res.status(404).render("404");
 });
