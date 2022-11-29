@@ -92,14 +92,15 @@ exports.vacationPhotoContestAjax = (req, res) => {
 
 exports.listVacations = async (req, res) => {
   const vacations = await db.getVacations({ available: true });
-
+  const currency = req.session.currency || "USD";
   res.render("vacation", {
+    currency: currency,
     vacations: vacations.map(vacation => ({
       name: vacation.name,
       description: vacation.description,
       sku: vacation.sku,
       inSeason: vacation.inSeason,
-      price: `$ ${vacation.price.toFixed(2)}`,
+      price: convertFromUSD(vacation.price, currency),
     })),
   });
 };
