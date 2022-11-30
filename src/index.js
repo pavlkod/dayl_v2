@@ -13,6 +13,8 @@ const weatherMiddleware = require("./lib/middleware/getWeather");
 const { credentionals } = require("./credentials");
 const flashMiddleware = require("./lib/middleware/flash");
 
+const routes = require("./routes/index");
+
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -49,6 +51,8 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
+
+routes(app);
 
 app.get("/", handlers.home);
 app.get("/about/", handlers.about);
