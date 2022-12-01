@@ -54,7 +54,7 @@ app.set("view engine", "handlebars");
 
 routes(app);
 
-app.get("/", handlers.home);
+// app.get("/", handlers.home);
 app.get("/about/", handlers.about);
 
 app.get("/newsletter-signup/", handlers.newsletterSignup);
