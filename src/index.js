@@ -4,6 +4,7 @@ const multiparty = require("multiparty");
 const express = require("express");
 const { engine } = require("express-handlebars");
 const cookieParser = require("cookie-parser");
+const redis = require("redis");
 const expressSession = require("express-session");
 const mongoose = require("mongoose");
 const RedisStore = require("connect-redis")(expressSession);
